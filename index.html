@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartu Identitas</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    overflow:hidden;
+}
+
+/* dekorasi */
+.circle{
+    position:absolute;
+    border-radius:50%;
+    opacity:0.25;
+}
+.circle.one{
+    width:180px;
+    height:180px;
+    background:#fff;
+    top:-50px;
+    left:-50px;
+}
+.circle.two{
+    width:220px;
+    height:220px;
+    background:#4facfe;
+    bottom:-70px;
+    right:-70px;
+}
+.circle.three{
+    width:120px;
+    height:120px;
+    background:#fff;
+    bottom:120px;
+    left:-40px;
+}
+
+/* card */
+.card{
+    width:320px;
+    padding:30px 25px 50px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    text-align:center;
+    position:relative;
+}
+
+/* item */
+.item{
+    margin:12px 0;
+    padding:12px 16px;
+    background:#000;
+    color:#fff;
+    border-radius:12px;
+    font-size:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* link */
+.link{
+    text-decoration:none;
+    transition:0.3s;
+}
+.link:hover{
+    background:#1e90ff;
+}
+
+/* icon */
+.item i{
+    font-size:18px;
+}
+
+/* credit */
+.credit{
+    position:absolute;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:11px;
+    color:#e0e0e0;
+    opacity:0.8;
+}
+</style>
+</head>
+<body>
+
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+
+<div class="card">
+
+    <div class="item">
+        <i class="fa-solid fa-id-card"></i>
+        Identitas
+    </div>
+
+    <a class="item link" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+        Akun TikTok
+    </a>
+
+    <a class="item link" href="https://wa.me/6289509082049" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        Nomor WhatsApp 1
+    </a>
+
+    <a class="item link" href="https://wa.me/6289616200535" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        Nomor WhatsApp 2
+    </a>
+
+    <div class="credit">credit © nama kamu</div>
+
+</div>
+
+</body>
+  </html>
