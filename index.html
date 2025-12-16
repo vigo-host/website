@@ -158,7 +158,7 @@ body{
         </a>
 
         <div class="btn" onclick="openPage('payment')">Payment</div>
-        <div class="btn" onclick="openPage('secret')">Rahasia</div>
+        <div class="btn" onclick="openPage('love')">Rahasia</div>
     </div>
 </div>
 
@@ -181,7 +181,7 @@ body{
 </div>
 
 <!-- ===== LOVE PAGE ===== -->
-<div class="container" id="Secret">
+<div class="container" id="love">
     <div class="card">
         <div class="back" onclick="backHome()">
             <i class="fa-solid fa-arrow-left"></i> Back
@@ -199,7 +199,7 @@ function openPage(id){
     document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 
-    if(id === 'secret'){
+    if(id === 'love'){
         document.body.style.background = 'linear-gradient(135deg,#ff758c,#ff7eb3)';
         createHearts();
     } else {
