@@ -2,7 +2,9 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>Website Vigo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,12 +16,14 @@
     padding:0;
     box-sizing:border-box;
     font-family:'Poppins', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html, body{
     width:100%;
     height:100%;
-    overflow:hidden; /* ❌ NO SCROLL */
+    overflow:hidden;
+    touch-action: manipulation;
 }
 
 body{
@@ -28,6 +32,7 @@ body{
     justify-content:center;
     align-items:center;
     color:#fff;
+    position:relative;
 }
 
 /* dekorasi */
@@ -35,88 +40,100 @@ body{
     position:absolute;
     border-radius:50%;
     opacity:0.25;
+    pointer-events:none; /* ✅ FIX UTAMA */
 }
-.circle.one{width:180px;height:180px;background:#fff;top:-60px;left:-60px;}
-.circle.two{width:240px;height:240px;background:#4facfe;bottom:-90px;right:-90px;}
-.circle.three{width:130px;height:130px;background:#fff;bottom:160px;left:-50px;}
+.circle.one{width:160px;height:160px;background:#fff;top:-60px;left:-60px;}
+.circle.two{width:220px;height:220px;background:#4facfe;bottom:-90px;right:-90px;}
+.circle.three{width:120px;height:120px;background:#fff;bottom:140px;left:-50px;}
 
 .container{
     width:100%;
-    max-width:400px;
-    padding:0 16px;
+    max-width:340px; /* ✅ DIPERKECIL */
+    padding:0 14px;
     text-align:center;
-
     position:absolute;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
     opacity:0;
-    transition:opacity 0.4s ease;
+    pointer-events:none;
+    transition:opacity 0.3s ease;
 }
 
-.container.active{opacity:1;}
+.container.active{
+    opacity:1;
+    pointer-events:auto;
+}
 
 .title{
-    font-size:36px;
+    font-size:30px;
     font-weight:700;
-    margin-bottom:20px;
+    margin-bottom:16px;
 }
 
 .card{
-    padding:26px 22px;
+    padding:22px 18px;
     background:rgba(255,255,255,0.15);
     backdrop-filter:blur(14px);
-    border-radius:22px;
+    border-radius:20px;
 }
 
 .item{
-    margin:12px 0;
-    padding:14px;
+    margin:10px 0;
+    padding:12px;
     background:#000;
-    border-radius:16px;
+    border-radius:14px;
     display:flex;
     justify-content:center;
+    align-items:center;
     gap:10px;
     color:#fff;
+    font-size:14px;
 }
 
-.link{text-decoration:none;}
-.link:hover{background:#1e90ff;}
+.link{
+    text-decoration:none;
+}
+.link:active{
+    background:#1e90ff;
+}
 
 .btn{
-    margin-top:14px;
-    padding:14px;
-    border-radius:16px;
+    margin-top:12px;
+    padding:12px;
+    border-radius:14px;
     background:#fff;
     color:#000;
     font-weight:600;
+    cursor:pointer;
 }
 
 .back{
     text-align:left;
-    margin-bottom:14px;
+    margin-bottom:12px;
     cursor:pointer;
+    font-size:14px;
 }
 
 .love-text{
-    font-size:30px;
+    font-size:20px;
     font-weight:700;
 }
 
 .credit{
     position:fixed;
-    bottom:12px;
+    bottom:10px;
     left:50%;
     transform:translateX(-50%);
-    font-size:13px;
+    font-size:12px;
     opacity:0.8;
+    pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO -->
 <audio id="mainSound" src="home.mp3" loop></audio>
 <audio id="loveSound" src="home2.mp3" loop></audio>
 
@@ -131,10 +148,10 @@ body{
         <a class="item link" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
             <i class="fa-brands fa-tiktok"></i> Akun TikTok
         </a>
-        <a class="item link" href="https://wa.me/6289509082049">
+        <a class="item link" href="https://wa.me/6289509082049" target="_blank">
             <i class="fa-brands fa-whatsapp"></i> Nomor Utama
         </a>
-        <a class="item link" href="https://wa.me/6289616200535">
+        <a class="item link" href="https://wa.me/6289616200535" target="_blank">
             <i class="fa-brands fa-whatsapp"></i> Nomor Cadangan
         </a>
 
@@ -157,8 +174,10 @@ body{
 <div class="container" id="love">
     <div class="card">
         <div class="back" onclick="backHome()">← Back</div>
-        <div class="love-text">I like you, but why do you like another man?<br><br><br><br>
-            Isinya gk nyambung kn? ya iyalah orang gw aja udah jadi gila </div>
+        <div class="love-text">
+            I like you, but why do you like another man?<br><br>
+            Isinya gk nyambung kn? ya iyalah orang gw aja udah jadi gila
+        </div>
     </div>
 </div>
 
@@ -169,14 +188,12 @@ let started = false;
 const mainSound = document.getElementById('mainSound');
 const loveSound = document.getElementById('loveSound');
 
-function startSound(){
+document.body.addEventListener('click', () => {
     if(!started){
         mainSound.play();
         started = true;
     }
-}
-
-document.body.addEventListener('click', startSound, { once:true });
+}, { once:true });
 
 function openPage(id){
     document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
@@ -200,4 +217,4 @@ function backHome(){
 </script>
 
 </body>
-</html>
+    </html>
