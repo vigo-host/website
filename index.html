@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Website Vigo</title>
 
-<!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -21,129 +18,122 @@
 
 body{
     min-height:100vh;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
     overflow:hidden;
     color:#fff;
+    transition:0.6s;
 }
 
-/* dekorasi */
+/* ===== DEKORASI ===== */
 .circle{
     position:absolute;
     border-radius:50%;
     opacity:0.25;
 }
-.circle.one{
-    width:180px;
-    height:180px;
-    background:#fff;
-    top:-50px;
-    left:-50px;
-}
-.circle.two{
-    width:240px;
-    height:240px;
-    background:#4facfe;
-    bottom:-80px;
-    right:-80px;
-}
-.circle.three{
-    width:120px;
-    height:120px;
-    background:#fff;
-    bottom:140px;
-    left:-40px;
-}
+.circle.one{width:200px;height:200px;background:#fff;top:-60px;left:-60px;}
+.circle.two{width:260px;height:260px;background:#4facfe;bottom:-90px;right:-90px;}
+.circle.three{width:140px;height:140px;background:#fff;bottom:160px;left:-50px;}
 
-/* container */
+/* ===== CONTAINER ===== */
 .container{
     width:100%;
-    max-width:360px;
+    max-width:420px;
     text-align:center;
-    position:relative;
+    position:absolute;
     z-index:2;
+    transform:translateX(120%);
+    opacity:0;
+    transition:0.6s ease;
+}
+.container.active{
+    transform:translateX(0);
+    opacity:1;
 }
 
-/* judul */
+/* ===== TITLE ===== */
 .title{
-    font-size:34px;
+    font-size:42px;
     font-weight:700;
-    margin-bottom:18px;
+    margin-bottom:24px;
+    margin-top:-40px;
 }
 
-/* card */
+/* ===== CARD ===== */
 .card{
-    padding:28px 22px;
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(12px);
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    padding:34px 28px;
+    background:rgba(255,255,255,0.14);
+    backdrop-filter:blur(14px);
+    border-radius:24px;
+    box-shadow:0 14px 40px rgba(0,0,0,0.3);
 }
 
-/* item */
+/* ===== ITEM ===== */
 .item{
-    margin:12px 0;
-    padding:13px 16px;
+    margin:14px 0;
+    padding:16px 18px;
     background:#000;
     color:#fff;
-    border-radius:14px;
-    font-size:15px;
+    border-radius:16px;
+    font-size:16px;
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
+    cursor:pointer;
 }
 
 /* link */
-.link{
-    text-decoration:none;
-    transition:0.3s;
-}
-.link:hover{
-    background:#1e90ff;
-}
+.link{text-decoration:none;}
+.link:hover{background:#1e90ff;}
 
 /* tombol */
 .btn{
-    margin-top:16px;
-    padding:12px;
-    border-radius:14px;
+    margin-top:18px;
+    padding:14px;
+    border-radius:18px;
     background:#fff;
     color:#000;
     font-weight:600;
     cursor:pointer;
-    transition:0.3s;
-}
-.btn:hover{
-    background:#e6e6e6;
-}
-
-/* halaman payment */
-.page{
-    display:none;
-}
-.page.active{
-    display:block;
+    font-size:16px;
 }
 
 /* back */
 .back{
-    margin-bottom:14px;
+    margin-bottom:16px;
     text-align:left;
     cursor:pointer;
-    font-size:14px;
 }
 
-/* credit background */
+/* ===== LOVE PAGE ===== */
+.love-text{
+    font-size:38px;
+    font-weight:700;
+    margin-top:40px;
+}
+
+/* heart animation */
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    font-size:24px;
+    animation:float 6s linear infinite;
+    opacity:0.6;
+}
+@keyframes float{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
+}
+
+/* credit */
 .credit{
     position:fixed;
-    bottom:12px;
+    bottom:20px;
     left:50%;
     transform:translateX(-50%);
-    font-size:11px;
-    opacity:0.8;
-    z-index:1;
+    font-size:15px;
 }
 </style>
 </head>
@@ -153,42 +143,51 @@ body{
 <div class="circle two"></div>
 <div class="circle three"></div>
 
-<!-- ===== HALAMAN UTAMA ===== -->
-<div class="container page active" id="home">
+<!-- ===== HOME ===== -->
+<div class="container active" id="home">
     <div class="title">Vigo Website</div>
-
     <div class="card">
         <a class="item link" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
             <i class="fa-brands fa-tiktok"></i> Akun TikTok
         </a>
-
         <a class="item link" href="https://wa.me/6289509082049" target="_blank">
             <i class="fa-brands fa-whatsapp"></i> Nomor Utama
         </a>
-
         <a class="item link" href="https://wa.me/6289616200535" target="_blank">
             <i class="fa-brands fa-whatsapp"></i> Nomor Cadangan
         </a>
 
-        <div class="btn" onclick="openPayment()">Payment</div>
+        <div class="btn" onclick="openPage('payment')">Payment</div>
+        <div class="btn" onclick="openPage('secret')">Rahasia</div>
     </div>
 </div>
 
-<!-- ===== HALAMAN PAYMENT ===== -->
-<div class="container page" id="payment">
+<!-- ===== PAYMENT ===== -->
+<div class="container" id="payment">
     <div class="title">Payment</div>
-
     <div class="card">
         <div class="back" onclick="backHome()">
             <i class="fa-solid fa-arrow-left"></i> Back
         </div>
 
-        <div class="item">
+        <div class="item" onclick="copyText('089509082049')">
             <i class="fa-solid fa-wallet"></i> DANA : 089509082049
         </div>
 
-        <div class="item">
+        <div class="item" onclick="copyText('089509082049')">
             <i class="fa-solid fa-credit-card"></i> OVO : 089509082049
+        </div>
+    </div>
+</div>
+
+<!-- ===== LOVE PAGE ===== -->
+<div class="container" id="Secret">
+    <div class="card">
+        <div class="back" onclick="backHome()">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </div>
+        <div class="love-text">
+            EKHMM I LOVE YOUUU 😘
         </div>
     </div>
 </div>
@@ -196,13 +195,37 @@ body{
 <div class="credit">credit © Vigo</div>
 
 <script>
-function openPayment(){
-    document.getElementById('home').classList.remove('active');
-    document.getElementById('payment').classList.add('active');
+function openPage(id){
+    document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    if(id === 'secret'){
+        document.body.style.background = 'linear-gradient(135deg,#ff758c,#ff7eb3)';
+        createHearts();
+    } else {
+        document.body.style.background = 'linear-gradient(135deg,#1e3c72,#2a5298)';
+        document.querySelectorAll('.heart').forEach(h=>h.remove());
+    }
 }
+
 function backHome(){
-    document.getElementById('payment').classList.remove('active');
-    document.getElementById('home').classList.add('active');
+    openPage('home');
+}
+
+function copyText(text){
+    navigator.clipboard.writeText(text);
+    alert('Nomor berhasil disalin!');
+}
+
+function createHearts(){
+    for(let i=0;i<12;i++){
+        let h = document.createElement('div');
+        h.className = 'heart';
+        h.innerHTML = '❤';
+        h.style.left = Math.random()*100+'%';
+        h.style.animationDuration = (4+Math.random()*4)+'s';
+        document.body.appendChild(h);
+    }
 }
 </script>
 
