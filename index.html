@@ -16,144 +16,125 @@
     font-family:'Poppins', sans-serif;
 }
 
+html, body{
+    width:100%;
+    height:100%;
+    overflow:hidden; /* ❌ NO SCROLL */
+}
+
 body{
-    min-height:100vh;
     background:linear-gradient(135deg,#1e3c72,#2a5298);
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow:hidden;
     color:#fff;
-    transition:0.6s;
 }
 
-/* ===== DEKORASI ===== */
+/* dekorasi */
 .circle{
     position:absolute;
     border-radius:50%;
     opacity:0.25;
 }
-.circle.one{width:200px;height:200px;background:#fff;top:-60px;left:-60px;}
-.circle.two{width:260px;height:260px;background:#4facfe;bottom:-90px;right:-90px;}
-.circle.three{width:140px;height:140px;background:#fff;bottom:160px;left:-50px;}
+.circle.one{width:180px;height:180px;background:#fff;top:-60px;left:-60px;}
+.circle.two{width:240px;height:240px;background:#4facfe;bottom:-90px;right:-90px;}
+.circle.three{width:130px;height:130px;background:#fff;bottom:160px;left:-50px;}
 
-/* ===== CONTAINER ===== */
 .container{
     width:100%;
-    max-width:420px;
+    max-width:400px;
+    padding:0 16px;
     text-align:center;
+
     position:absolute;
-    z-index:2;
-    transform:translateX(120%);
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     opacity:0;
-    transition:0.6s ease;
-}
-.container.active{
-    transform:translateX(0);
-    opacity:1;
+    transition:opacity 0.4s ease;
 }
 
-/* ===== TITLE ===== */
+.container.active{opacity:1;}
+
 .title{
-    font-size:42px;
+    font-size:36px;
     font-weight:700;
-    margin-bottom:24px;
-    margin-top:-40px;
+    margin-bottom:20px;
 }
 
-/* ===== CARD ===== */
 .card{
-    padding:34px 28px;
-    background:rgba(255,255,255,0.14);
+    padding:26px 22px;
+    background:rgba(255,255,255,0.15);
     backdrop-filter:blur(14px);
-    border-radius:24px;
-    box-shadow:0 14px 40px rgba(0,0,0,0.3);
+    border-radius:22px;
 }
 
-/* ===== ITEM ===== */
 .item{
-    margin:14px 0;
-    padding:16px 18px;
+    margin:12px 0;
+    padding:14px;
     background:#000;
-    color:#fff;
     border-radius:16px;
-    font-size:16px;
     display:flex;
-    align-items:center;
-    gap:12px;
-    cursor:pointer;
+    justify-content:center;
+    gap:10px;
+    color:#fff;
 }
 
-/* link */
 .link{text-decoration:none;}
 .link:hover{background:#1e90ff;}
 
-/* tombol */
 .btn{
-    margin-top:18px;
+    margin-top:14px;
     padding:14px;
-    border-radius:18px;
+    border-radius:16px;
     background:#fff;
     color:#000;
     font-weight:600;
-    cursor:pointer;
-    font-size:16px;
 }
 
-/* back */
 .back{
-    margin-bottom:16px;
     text-align:left;
+    margin-bottom:14px;
     cursor:pointer;
 }
 
-/* ===== LOVE PAGE ===== */
 .love-text{
-    font-size:38px;
+    font-size:30px;
     font-weight:700;
-    margin-top:40px;
 }
 
-/* heart animation */
-.heart{
-    position:absolute;
-    color:#ff4d6d;
-    font-size:24px;
-    animation:float 6s linear infinite;
-    opacity:0.6;
-}
-@keyframes float{
-    0%{transform:translateY(100vh);}
-    100%{transform:translateY(-10vh);}
-}
-
-/* credit */
 .credit{
     position:fixed;
-    bottom:20px;
+    bottom:12px;
     left:50%;
     transform:translateX(-50%);
-    font-size:15px;
+    font-size:13px;
+    opacity:0.8;
 }
 </style>
 </head>
+
 <body>
+
+<!-- AUDIO -->
+<audio id="mainSound" src="sound-main.mp3" loop></audio>
+<audio id="loveSound" src="sound-love.mp3" loop></audio>
 
 <div class="circle one"></div>
 <div class="circle two"></div>
 <div class="circle three"></div>
 
-<!-- ===== HOME ===== -->
+<!-- HOME -->
 <div class="container active" id="home">
     <div class="title">Vigo Website</div>
     <div class="card">
         <a class="item link" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
             <i class="fa-brands fa-tiktok"></i> Akun TikTok
         </a>
-        <a class="item link" href="https://wa.me/6289509082049" target="_blank">
+        <a class="item link" href="https://wa.me/6289509082049">
             <i class="fa-brands fa-whatsapp"></i> Nomor Utama
         </a>
-        <a class="item link" href="https://wa.me/6289616200535" target="_blank">
+        <a class="item link" href="https://wa.me/6289616200535">
             <i class="fa-brands fa-whatsapp"></i> Nomor Cadangan
         </a>
 
@@ -162,70 +143,58 @@ body{
     </div>
 </div>
 
-<!-- ===== PAYMENT ===== -->
+<!-- PAYMENT -->
 <div class="container" id="payment">
     <div class="title">Payment</div>
     <div class="card">
-        <div class="back" onclick="backHome()">
-            <i class="fa-solid fa-arrow-left"></i> Back
-        </div>
-
-        <div class="item" onclick="copyText('089509082049')">
-            <i class="fa-solid fa-wallet"></i> DANA : 089509082049
-        </div>
-
-        <div class="item" onclick="copyText('089509082049')">
-            <i class="fa-solid fa-credit-card"></i> OVO : 089509082049
-        </div>
+        <div class="back" onclick="backHome()">← Back</div>
+        <div class="item">DANA : 089509082049</div>
+        <div class="item">OVO : 089509082049</div>
     </div>
 </div>
 
-<!-- ===== LOVE PAGE ===== -->
+<!-- LOVE -->
 <div class="container" id="love">
     <div class="card">
-        <div class="back" onclick="backHome()">
-            <i class="fa-solid fa-arrow-left"></i> Back
-        </div>
-        <div class="love-text">
-            EKHMM I LOVE YOUUU 😘
-        </div>
+        <div class="back" onclick="backHome()">← Back</div>
+        <div class="love-text">EKHMM I LOVE YOUUU 😘</div>
     </div>
 </div>
 
 <div class="credit">credit © Vigo</div>
 
 <script>
+let started = false;
+const mainSound = document.getElementById('mainSound');
+const loveSound = document.getElementById('loveSound');
+
+function startSound(){
+    if(!started){
+        mainSound.play();
+        started = true;
+    }
+}
+
+document.body.addEventListener('click', startSound, { once:true });
+
 function openPage(id){
     document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 
     if(id === 'love'){
-        document.body.style.background = 'linear-gradient(135deg,#ff758c,#ff7eb3)';
-        createHearts();
-    } else {
-        document.body.style.background = 'linear-gradient(135deg,#1e3c72,#2a5298)';
-        document.querySelectorAll('.heart').forEach(h=>h.remove());
+        mainSound.pause();
+        loveSound.currentTime = 0;
+        loveSound.play();
+        document.body.style.background='linear-gradient(135deg,#ff758c,#ff7eb3)';
+    }else{
+        loveSound.pause();
+        mainSound.play();
+        document.body.style.background='linear-gradient(135deg,#1e3c72,#2a5298)';
     }
 }
 
 function backHome(){
     openPage('home');
-}
-
-function copyText(text){
-    navigator.clipboard.writeText(text);
-    alert('Nomor berhasil disalin!');
-}
-
-function createHearts(){
-    for(let i=0;i<12;i++){
-        let h = document.createElement('div');
-        h.className = 'heart';
-        h.innerHTML = '❤';
-        h.style.left = Math.random()*100+'%';
-        h.style.animationDuration = (4+Math.random()*4)+'s';
-        document.body.appendChild(h);
-    }
 }
 </script>
 
