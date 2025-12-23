@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" 
- content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Website Vigo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,13 +16,15 @@
     box-sizing:border-box;
     font-family:'Poppins', sans-serif;
 }
-html, body{
+
+html,body{
     width:100%;
     height:100%;
     overflow:hidden;
+    background:#000;
 }
 
-/* ==== VIDEO BACKGROUND === */
+/* ===== VIDEO BACKGROUND (LOCAL FILE) ===== */
 .bg-video{
     position:fixed;
     inset:0;
@@ -32,30 +34,64 @@ html, body{
     z-index:-3;
 }
 
+/* ===== OVERLAY ===== */
 .overlay{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,.45);
     z-index:-2;
+    transition:.4s;
 }
 
+/* ===== LOVE MODE OVERLAY ===== */
 .overlay.love{
-    background:rgba(255,120,160,.6);
+    background:rgba(255,120,160,.55);
 }
 
-/* ==== CONTAINER === */
+/* ===== LOVE HEART ANIMATION ===== */
+.hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+    display:none;
+}
+
+.heart{
+    position:absolute;
+    color:rgba(255,80,130,.9);
+    font-size:26px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(110vh) scale(.6);
+        opacity:0;
+    }
+    20%{opacity:1;}
+    to{
+        transform:translateY(-10vh) scale(1.3);
+        opacity:0;
+    }
+}
+
+/* ===== CONTAINER ===== */
 .container{
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:90%;
-    max-width:420px; /* diperbesar */
+    width:100%;
+    max-width:340px;
+    padding:0 14px;
     text-align:center;
     opacity:0;
     pointer-events:none;
-    transition:.4s ease;
+    transition:.3s ease;
     z-index:2;
+    color:#fff;
 }
 
 .container.active{
@@ -64,24 +100,23 @@ html, body{
 }
 
 .title{
-    font-size:32px;
+    font-size:30px;
     font-weight:700;
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 .card{
-    padding:30px 24px; /* diperbesar */
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(16px);
-    border-radius:22px;
+    padding:22px 18px;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(14px);
+    border-radius:20px;
 }
 
 .item{
-    margin:14px 0;
-    padding:14px;
-    font-size:16px; /* diperbesar */
+    margin:10px 0;
+    padding:12px;
     background:#000;
-    border-radius:16px;
+    border-radius:14px;
     display:flex;
     justify-content:center;
     gap:10px;
@@ -90,10 +125,9 @@ html, body{
 }
 
 .btn{
-    margin-top:14px;
-    padding:14px;
-    font-size:16px;
-    border-radius:16px;
+    margin-top:12px;
+    padding:12px;
+    border-radius:14px;
     background:#fff;
     color:#000;
     font-weight:600;
@@ -103,46 +137,32 @@ html, body{
 .back{
     text-align:left;
     margin-bottom:14px;
-    font-size:16px;
     cursor:pointer;
-    color:#fff;
+}
+
+/* ===== RAHASIA ===== */
+#love.container{
+    max-width:380px;
+}
+
+#love .card{
+    padding:32px 26px;
+    border-radius:26px;
 }
 
 .love-text{
-    font-size:20px;
+    font-size:22px;
     font-weight:700;
+    line-height:1.6;
 }
 
-/* ==== HEART ANIMATION FOR LOVE === */
-.hearts{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:1;
-    display:none;
-}
-
-.heart{
-    position:absolute;
-    color:rgba(255,80,120,0.85);
-    font-size:28px; /* ukuran lebih besar */
-    animation:float 6s linear infinite;
-}
-
-@keyframes float{
-    0%{transform:translateY(100vh) scale(0.6);opacity:0;}
-    20%{opacity:1;}
-    100%{transform:translateY(-15vh) scale(1.3);opacity:0;}
-}
-
-/* credit */
+/* ===== CREDIT ===== */
 .credit{
     position:fixed;
-    bottom:12px;
+    bottom:10px;
     left:50%;
     transform:translateX(-50%);
-    font-size:14px;
+    font-size:12px;
     opacity:.8;
     z-index:3;
 }
@@ -151,17 +171,17 @@ html, body{
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<video class="bg-video" autoplay muted loop playsinline>
-    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
+<!-- ===== VIDEO BACKGROUND (FILE LOKAL) ===== -->
+<video class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="background.mp4" type="video/mp4">
 </video>
-<div id="overlay" class="overlay"></div>
+
+<div class="overlay" id="overlay"></div>
+<div class="hearts" id="hearts"></div>
 
 <!-- AUDIO -->
 <audio id="mainSound" src="home.mp3" loop></audio>
 <audio id="loveSound" src="home2.mp3" loop></audio>
-
-<div class="hearts" id="hearts"></div>
 
 <!-- HOME -->
 <div class="container active" id="home">
@@ -176,6 +196,7 @@ html, body{
         <a class="item" href="https://wa.me/6289616200535" target="_blank">
             <i class="fa-brands fa-whatsapp"></i> Nomor Cadangan
         </a>
+
         <div class="btn" onclick="openPage('payment')">Payment</div>
         <div class="btn" onclick="openPage('love')">Rahasia</div>
     </div>
@@ -193,12 +214,11 @@ html, body{
 
 <!-- LOVE -->
 <div class="container" id="love">
-    <div class="title">Rahasia</div>
     <div class="card">
         <div class="back" onclick="backHome()">← Back</div>
         <div class="love-text">
-            I like you, but why do you like another man?<br><br>
-            Kapan si kamu peka 😡
+            I like you, but why do you like another man?<br><br><br>
+            Kapan si kamu peka, sesekali peka kek kalo aku suka kamuu 😡
         </div>
     </div>
 </div>
@@ -206,44 +226,49 @@ html, body{
 <div class="credit">credit © Vigo</div>
 
 <script>
+const overlay = document.getElementById('overlay');
+const hearts = document.getElementById('hearts');
 const mainSound = document.getElementById('mainSound');
 const loveSound = document.getElementById('loveSound');
-const heartsBox = document.getElementById('hearts');
-let heartInterval, started=false;
 
-function createHeart(){
-    const heart = document.createElement('div');
-    heart.className='heart';
-    heart.innerHTML='❤';
-    heart.style.left=Math.random()*100+'vw';
-    heart.style.animationDuration=(4+Math.random()*3)+'s';
-    heartsBox.appendChild(heart);
-    setTimeout(()=>heart.remove(),7000);
-}
+let heartInterval;
+let audioStarted=false;
 
-document.body.addEventListener('click', () => {
-    if(!started){
+/* AUDIO HARUS KLIK PERTAMA (ATURAN BROWSER) */
+document.body.addEventListener('click',()=>{
+    if(!audioStarted){
         mainSound.play();
-        started=true;
+        audioStarted=true;
     }
 },{once:true});
+
+function createHeart(){
+    const h = document.createElement('div');
+    h.className='heart';
+    h.innerHTML='❤';
+    h.style.left=Math.random()*100+'vw';
+    h.style.animationDuration=(4+Math.random()*3)+'s';
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+}
 
 function openPage(id){
     document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
     document.getElementById(id).classList.add('active');
 
     if(id==='love'){
-        heartsBox.style.display='block';
+        overlay.classList.add('love');
+        hearts.style.display='block';
         heartInterval=setInterval(createHeart,400);
         mainSound.pause();
         loveSound.play();
-        document.getElementById('overlay').classList.add('love');
-    } else {
+    }else{
+        overlay.classList.remove('love');
+        hearts.style.display='none';
+        hearts.innerHTML='';
         clearInterval(heartInterval);
-        heartsBox.style.display='none';
         loveSound.pause();
-        mainSound.play();
-        document.getElementById('overlay').classList.remove('love');
+        if(audioStarted) mainSound.play();
     }
 }
 
@@ -253,4 +278,4 @@ function backHome(){
 </script>
 
 </body>
-    </html>
+                                                               </html>
