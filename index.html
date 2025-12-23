@@ -174,8 +174,8 @@ body{
 <body>
 
 <!-- VIDEO BACKGROUND (FILE LOKAL) -->
-<video class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="ppk.mp4" type="video/mp4">
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="background.mp4" type="video/mp4">
 </video>
 
 <div class="overlay" id="overlay"></div>
@@ -273,6 +273,19 @@ function openPage(id){
 function backHome(){
     openPage('home');
 }
+    /* === PAKSA VIDEO MUNCUL DI AWAL === */
+const bgVideo = document.getElementById('bgVideo');
+
+window.addEventListener('load', () => {
+    bgVideo.play().catch(()=>{});
+});
+
+/* Kalau browser pause sendiri (HP sering begini) */
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        bgVideo.play().catch(()=>{});
+    }
+});
 </script>
 
 </body>
