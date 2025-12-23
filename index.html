@@ -22,12 +22,13 @@ html,body{
     overflow:hidden;
 }
 
+/* BODY WAJIB ADA WARNA DASAR */
 body{
     background:black;
     color:#fff;
 }
 
-/* === VIDEO BACKGROUND (LINK) === */
+/* === VIDEO BACKGROUND (STABIL) === */
 .bg-video{
     position:fixed;
     inset:0;
@@ -46,17 +47,17 @@ body{
     transition:.4s;
 }
 
-/* === LOVE MODE (LEBIH PINK & ROMANTIS) === */
+/* === MODE LOVE (LEBIH PINK) === */
 .overlay.love{
     background:
       linear-gradient(
         135deg,
-        rgba(255,90,180,.85),
-        rgba(255,160,210,.85)
+        rgba(255,70,170,.9),
+        rgba(255,160,220,.9)
       );
 }
 
-/* === LOVE HEART === */
+/* === HEART === */
 .hearts{
     position:fixed;
     inset:0;
@@ -67,8 +68,8 @@ body{
 
 .heart{
     position:absolute;
-    font-size:28px;
-    color:rgba(255,70,160,.95);
+    font-size:30px;
+    color:rgba(255,60,150,1);
     animation:float 6s linear infinite;
 }
 
@@ -148,7 +149,7 @@ body{
     cursor:pointer;
 }
 
-/* === LOVE CARD === */
+/* === LOVE === */
 #love.container{max-width:380px}
 
 .love-text{
@@ -173,9 +174,18 @@ body{
 
 <body>
 
-<!-- VIDEO BACKGROUND (LINK) -->
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
-    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
+<!-- VIDEO BACKGROUND (LINK + POSTER ANTI HITAM) -->
+<video
+  id="bgVideo"
+  class="bg-video"
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  poster="https://images.unsplash.com/photo-1503264116251-35a269479413"
+>
+  <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
 </video>
 
 <div class="overlay" id="overlay"></div>
@@ -236,13 +246,13 @@ const bgVideo = document.getElementById('bgVideo');
 
 let started=false, interval;
 
-/* Paksa video jalan */
-window.addEventListener('load',()=>bgVideo.play().catch(()=>{}));
-
-/* Audio */
-document.body.addEventListener('click',()=>{
+/* PAKSA VIDEO JALAN (ANTI AUTOPLAY BLOCK) */
+document.addEventListener('click',()=>{
+    if(bgVideo.paused){
+        bgVideo.play().catch(()=>{});
+    }
     if(!started){
-        mainSound.play();
+        mainSound.play().catch(()=>{});
         started=true;
     }
 },{once:true});
@@ -261,7 +271,7 @@ function openPage(id){
             h.style.left=Math.random()*100+'vw';
             hearts.appendChild(h);
             setTimeout(()=>h.remove(),6000);
-        },350);
+        },300);
         mainSound.pause();
         loveSound.play();
     }else{
@@ -278,4 +288,4 @@ function backHome(){ openPage('home'); }
 </script>
 
 </body>
-</html>
+    </html>
