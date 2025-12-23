@@ -2,8 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Website Vigo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,29 +22,28 @@ html,body{
     overflow:hidden;
 }
 
-/* ❌ JANGAN background hitam di body */
+/* === BODY PENYANGGA (SEPERTI KODE LAGU) === */
 body{
-    background:none;
+    background:black;
     color:#fff;
 }
 
-/* ===== VIDEO BACKGROUND ===== */
+/* === VIDEO BACKGROUND (STABIL) === */
 .bg-video{
     position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
+    inset:0;
+    width:100%;
+    height:100%;
     object-fit:cover;
-    z-index:-5;
+    z-index:-1;
 }
 
-/* ===== OVERLAY ===== */
+/* === OVERLAY === */
 .overlay{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,.45);
-    z-index:-4;
+    z-index:0;
     transition:.3s;
 }
 
@@ -53,13 +51,13 @@ body{
     background:rgba(255,120,160,.55);
 }
 
-/* ===== LOVE HEART ===== */
+/* === LOVE HEART === */
 .hearts{
     position:fixed;
     inset:0;
     pointer-events:none;
     display:none;
-    z-index:-3;
+    z-index:1;
 }
 
 .heart{
@@ -75,7 +73,7 @@ body{
     to{transform:translateY(-10vh);opacity:0}
 }
 
-/* ===== CONTAINER ===== */
+/* === CONTAINER === */
 .container{
     position:absolute;
     top:50%;
@@ -102,7 +100,7 @@ body{
     margin-bottom:16px;
 }
 
-/* ===== CARD ===== */
+/* === CARD === */
 .card{
     padding:24px 18px;
     background:rgba(255,255,255,.18);
@@ -110,7 +108,7 @@ body{
     border-radius:22px;
 }
 
-/* ===== ITEM (RAPI ALA TIKTOK) ===== */
+/* === ITEM (RAPI ALA TIKTOK) === */
 .item{
     width:100%;
     margin:10px 0;
@@ -130,7 +128,7 @@ body{
     white-space:nowrap;
 }
 
-/* ===== BUTTON ===== */
+/* === BUTTON === */
 .btn{
     width:100%;
     margin-top:12px;
@@ -148,7 +146,7 @@ body{
     cursor:pointer;
 }
 
-/* ===== LOVE ===== */
+/* === LOVE === */
 #love.container{max-width:380px}
 
 .love-text{
@@ -158,7 +156,7 @@ body{
     text-align:center;
 }
 
-/* ===== CREDIT ===== */
+/* === CREDIT === */
 .credit{
     position:fixed;
     bottom:10px;
@@ -228,14 +226,19 @@ body{
 <div class="credit">credit © Vigo</div>
 
 <script>
-const overlay=document.getElementById('overlay');
-const hearts=document.getElementById('hearts');
-const mainSound=document.getElementById('mainSound');
-const loveSound=document.getElementById('loveSound');
+const overlay = document.getElementById('overlay');
+const hearts = document.getElementById('hearts');
+const mainSound = document.getElementById('mainSound');
+const loveSound = document.getElementById('loveSound');
+const bgVideo = document.getElementById('bgVideo');
 
 let started=false, interval;
 
-/* AUDIO start saat klik pertama */
+/* PAKSA VIDEO JALAN */
+window.addEventListener('load', ()=> bgVideo.play().catch(()=>{}));
+bgVideo.addEventListener('canplay', ()=> bgVideo.play().catch(()=>{}));
+
+/* AUDIO */
 document.body.addEventListener('click',()=>{
     if(!started){
         mainSound.play();
@@ -270,23 +273,8 @@ function openPage(id){
     }
 }
 
-function backHome(){
-    openPage('home');
-}
-    /* === PAKSA VIDEO MUNCUL DI AWAL === */
-const bgVideo = document.getElementById('bgVideo');
-
-window.addEventListener('load', () => {
-    bgVideo.play().catch(()=>{});
-});
-
-/* Kalau browser pause sendiri (HP sering begini) */
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-        bgVideo.play().catch(()=>{});
-    }
-});
+function backHome(){ openPage('home'); }
 </script>
 
 </body>
-    </html>
+</html>
