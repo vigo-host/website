@@ -26,8 +26,14 @@ html, body{
     touch-action: manipulation;
 }
 
+/* ===== BACKGROUND AWAL (GANTI LINK DI SINI) ===== */
 body{
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    background:
+        linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+        url("https://images.unsplash.com/photo-1503264116251-35a269479413");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -35,20 +41,30 @@ body{
     position:relative;
 }
 
-/* dekorasi */
+/* ===== MODE LOVE ===== */
+body.love-mode{
+    background:
+        linear-gradient(rgba(255,120,160,.6), rgba(255,120,160,.6)),
+        url("https://images.unsplash.com/photo-1517841905240-472988babdf9");
+    background-size:cover;
+    background-position:center;
+}
+
+/* ===== DEKORASI BULAT ===== */
 .circle{
     position:absolute;
     border-radius:50%;
     opacity:0.25;
-    pointer-events:none; /* ✅ FIX UTAMA */
+    pointer-events:none;
 }
 .circle.one{width:160px;height:160px;background:#fff;top:-60px;left:-60px;}
 .circle.two{width:220px;height:220px;background:#4facfe;bottom:-90px;right:-90px;}
 .circle.three{width:120px;height:120px;background:#fff;bottom:140px;left:-50px;}
 
+/* ===== CONTAINER ===== */
 .container{
     width:100%;
-    max-width:340px; /* ✅ DIPERKECIL */
+    max-width:340px;
     padding:0 14px;
     text-align:center;
     position:absolute;
@@ -58,6 +74,7 @@ body{
     opacity:0;
     pointer-events:none;
     transition:opacity 0.3s ease;
+    z-index:2;
 }
 
 .container.active{
@@ -65,6 +82,215 @@ body{
     pointer-events:auto;
 }
 
+.title{
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:16px;
+}
+
+.card{
+    padding:22px 18px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(14px);
+    border-radius:20px;
+}
+
+.item{
+    margin:10px 0;
+    padding:12px;
+    background:#000;
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    color:#fff;
+    font-size:14px;
+}
+
+.link{
+    text-decoration:none;
+}
+.link:active{
+    background:#1e90ff;
+}
+
+.btn{
+    margin-top:12px;
+    padding:12px;
+    border-radius:14px;
+    background:#fff;
+    color:#000;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.back{
+    text-align:left;
+    margin-bottom:12px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.love-text{
+    font-size:20px;
+    font-weight:700;
+}
+
+/* ===== LOVE HEART ANIMATION ===== */
+.hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:1;
+    display:none;
+}
+
+.heart{
+    position:absolute;
+    color:rgba(255,80,120,0.85);
+    font-size:22px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(100vh) scale(0.6);
+        opacity:0;
+    }
+    20%{opacity:1;}
+    100%{
+        transform:translateY(-10vh) scale(1.2);
+        opacity:0;
+    }
+}
+
+/* ===== CREDIT ===== */
+.credit{
+    position:fixed;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:12px;
+    opacity:0.8;
+    pointer-events:none;
+    z-index:3;
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="mainSound" src="home.mp3" loop></audio>
+<audio id="loveSound" src="home2.mp3" loop></audio>
+
+<!-- DEKORASI -->
+<div class="circle one"></div>
+<div class="circle two"></div>
+<div class="circle three"></div>
+
+<!-- LOVE ANIMATION -->
+<div class="hearts" id="hearts"></div>
+
+<!-- HOME -->
+<div class="container active" id="home">
+    <div class="title">Vigo Website</div>
+    <div class="card">
+        <a class="item link" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
+            <i class="fa-brands fa-tiktok"></i> Akun TikTok
+        </a>
+        <a class="item link" href="https://wa.me/6289509082049" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> Nomor Utama
+        </a>
+        <a class="item link" href="https://wa.me/6289616200535" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> Nomor Cadangan
+        </a>
+
+        <div class="btn" onclick="openPage('payment')">Payment</div>
+        <div class="btn" onclick="openPage('love')">Rahasia</div>
+    </div>
+</div>
+
+<!-- PAYMENT -->
+<div class="container" id="payment">
+    <div class="title">Payment</div>
+    <div class="card">
+        <div class="back" onclick="backHome()">← Back</div>
+        <div class="item">DANA : 089509082049</div>
+        <div class="item">OVO : 089509082049</div>
+    </div>
+</div>
+
+<!-- LOVE -->
+<div class="container" id="love">
+    <div class="card">
+        <div class="back" onclick="backHome()">← Back</div>
+        <div class="love-text">
+            I like you, but why do you like another man?<br><br>
+            Kapan si kamu peka, sesekali peka kek kalo aku suka kamuu 😡
+        </div>
+    </div>
+</div>
+
+<div class="credit">credit © Vigo</div>
+
+<script>
+let started = false;
+const mainSound = document.getElementById('mainSound');
+const loveSound = document.getElementById('loveSound');
+
+document.body.addEventListener('click', () => {
+    if(!started){
+        mainSound.play();
+        started = true;
+    }
+}, { once:true });
+
+const heartsBox = document.getElementById('hearts');
+let heartInterval;
+
+function createHeart(){
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerHTML = '❤';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+    heartsBox.appendChild(heart);
+    setTimeout(()=>heart.remove(),7000);
+}
+
+function openPage(id){
+    document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    if(id === 'love'){
+        mainSound.pause();
+        loveSound.currentTime = 0;
+        loveSound.play();
+
+        document.body.classList.add('love-mode');
+        heartsBox.style.display = 'block';
+        heartInterval = setInterval(createHeart, 400);
+    }else{
+        loveSound.pause();
+        mainSound.play();
+
+        document.body.classList.remove('love-mode');
+        heartsBox.innerHTML = '';
+        heartsBox.style.display = 'none';
+        clearInterval(heartInterval);
+    }
+}
+
+function backHome(){
+    openPage('home');
+}
+</script>
+
+</body>
+</html>
 .title{
     font-size:30px;
     font-weight:700;
