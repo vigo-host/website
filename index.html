@@ -22,13 +22,12 @@ html,body{
     overflow:hidden;
 }
 
-/* === BODY PENYANGGA (SEPERTI KODE LAGU) === */
 body{
     background:black;
     color:#fff;
 }
 
-/* === VIDEO BACKGROUND (STABIL) === */
+/* === VIDEO BACKGROUND (LINK) === */
 .bg-video{
     position:fixed;
     inset:0;
@@ -44,11 +43,17 @@ body{
     inset:0;
     background:rgba(0,0,0,.45);
     z-index:0;
-    transition:.3s;
+    transition:.4s;
 }
 
+/* === LOVE MODE (LEBIH PINK & ROMANTIS) === */
 .overlay.love{
-    background:rgba(255,120,160,.55);
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255,90,180,.85),
+        rgba(255,160,210,.85)
+      );
 }
 
 /* === LOVE HEART === */
@@ -62,15 +67,15 @@ body{
 
 .heart{
     position:absolute;
-    font-size:26px;
-    color:rgba(255,80,130,.9);
+    font-size:28px;
+    color:rgba(255,70,160,.95);
     animation:float 6s linear infinite;
 }
 
 @keyframes float{
-    from{transform:translateY(110vh);opacity:0}
+    from{transform:translateY(110vh) scale(.6);opacity:0}
     20%{opacity:1}
-    to{transform:translateY(-10vh);opacity:0}
+    to{transform:translateY(-10vh) scale(1.2);opacity:0}
 }
 
 /* === CONTAINER === */
@@ -104,11 +109,11 @@ body{
 .card{
     padding:24px 18px;
     background:rgba(255,255,255,.18);
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(14px);
     border-radius:22px;
 }
 
-/* === ITEM (RAPI ALA TIKTOK) === */
+/* === ITEM === */
 .item{
     width:100%;
     margin:10px 0;
@@ -117,15 +122,12 @@ body{
     border-radius:14px;
     color:#fff;
     text-decoration:none;
-
     display:flex;
     justify-content:center;
     align-items:center;
     gap:10px;
-
     font-size:15px;
     font-weight:600;
-    white-space:nowrap;
 }
 
 /* === BUTTON === */
@@ -146,7 +148,7 @@ body{
     cursor:pointer;
 }
 
-/* === LOVE === */
+/* === LOVE CARD === */
 #love.container{max-width:380px}
 
 .love-text{
@@ -171,9 +173,9 @@ body{
 
 <body>
 
-<!-- VIDEO BACKGROUND (FILE LOKAL) -->
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline preload="auto">
-    <source src="background.mp4" type="video/mp4">
+<!-- VIDEO BACKGROUND (LINK) -->
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
+    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
 </video>
 
 <div class="overlay" id="overlay"></div>
@@ -234,11 +236,10 @@ const bgVideo = document.getElementById('bgVideo');
 
 let started=false, interval;
 
-/* PAKSA VIDEO JALAN */
-window.addEventListener('load', ()=> bgVideo.play().catch(()=>{}));
-bgVideo.addEventListener('canplay', ()=> bgVideo.play().catch(()=>{}));
+/* Paksa video jalan */
+window.addEventListener('load',()=>bgVideo.play().catch(()=>{}));
 
-/* AUDIO */
+/* Audio */
 document.body.addEventListener('click',()=>{
     if(!started){
         mainSound.play();
@@ -260,7 +261,7 @@ function openPage(id){
             h.style.left=Math.random()*100+'vw';
             hearts.appendChild(h);
             setTimeout(()=>h.remove(),6000);
-        },400);
+        },350);
         mainSound.pause();
         loveSound.play();
     }else{
