@@ -45,7 +45,7 @@ body{
     z-index:0;
 }
 
-/* CONTAINER */
+/* CONTAINER (FIX BLANK) */
 .container{
     position:absolute;
     top:50%;
@@ -55,9 +55,7 @@ body{
     max-width:340px;
     padding:0 14px;
     text-align:center;
-    opacity:0;
-    pointer-events:none;
-    transition:.4s;
+    display:none;
     z-index:2;
 }
 
@@ -67,8 +65,7 @@ body{
 }
 
 .container.active{
-    opacity:1;
-    pointer-events:auto;
+    display:block;
 }
 
 .title{
@@ -166,11 +163,10 @@ body{
         <div class="title">Selamat Datang 👋</div>
         <div class="intro-text">
             Bu Ani beli kargo<br>
-            Kenalin nama aku vigo<br><br>
-          
+            Kenalin nama aku Vigo<br><br>
             Terima kasih sudah berkunjung ke website ini.
             Di dalamnya terdapat beberapa informasi dan kontak resmi Vigo.
-            <br><br><br>
+            <br><br>
             Klik tombol di bawah untuk melanjutkan.
         </div>
         <div class="btn" onclick="openPage('home')">Masuk ke Web</div>
