@@ -22,13 +22,12 @@ html,body{
     overflow:hidden;
 }
 
-/* BODY WAJIB ADA WARNA DASAR */
 body{
     background:black;
     color:#fff;
 }
 
-/* === VIDEO BACKGROUND (STABIL) === */
+/* VIDEO BACKGROUND */
 .bg-video{
     position:fixed;
     inset:0;
@@ -38,48 +37,15 @@ body{
     z-index:-1;
 }
 
-/* === OVERLAY === */
+/* OVERLAY */
 .overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.45);
+    background:rgba(0,0,0,.55);
     z-index:0;
-    transition:.4s;
 }
 
-/* === MODE LOVE (LEBIH PINK) === */
-.overlay.love{
-    background:
-      linear-gradient(
-        135deg,
-        rgba(255,70,170,.9),
-        rgba(255,160,220,.9)
-      );
-}
-
-/* === HEART === */
-.hearts{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    display:none;
-    z-index:1;
-}
-
-.heart{
-    position:absolute;
-    font-size:30px;
-    color:rgba(255,60,150,1);
-    animation:float 6s linear infinite;
-}
-
-@keyframes float{
-    from{transform:translateY(110vh) scale(.6);opacity:0}
-    20%{opacity:1}
-    to{transform:translateY(-10vh) scale(1.2);opacity:0}
-}
-
-/* === CONTAINER === */
+/* CONTAINER */
 .container{
     position:absolute;
     top:50%;
@@ -91,7 +57,7 @@ body{
     text-align:center;
     opacity:0;
     pointer-events:none;
-    transition:.3s;
+    transition:.4s;
     z-index:2;
 }
 
@@ -106,15 +72,15 @@ body{
     margin-bottom:16px;
 }
 
-/* === CARD === */
+/* CARD */
 .card{
-    padding:24px 18px;
+    padding:26px 18px;
     background:rgba(255,255,255,.18);
     backdrop-filter:blur(14px);
     border-radius:22px;
 }
 
-/* === ITEM === */
+/* ITEM */
 .item{
     width:100%;
     margin:10px 0;
@@ -131,10 +97,10 @@ body{
     font-weight:600;
 }
 
-/* === BUTTON === */
+/* BUTTON */
 .btn{
     width:100%;
-    margin-top:12px;
+    margin-top:14px;
     padding:14px;
     border-radius:14px;
     background:#fff;
@@ -149,17 +115,14 @@ body{
     cursor:pointer;
 }
 
-/* === LOVE === */
-#love.container{max-width:380px}
-
-.love-text{
-    font-size:22px;
-    font-weight:700;
+/* INTRO TEXT */
+.intro-text{
+    font-size:16px;
     line-height:1.8;
-    text-align:center;
+    opacity:.95;
 }
 
-/* === CREDIT === */
+/* CREDIT */
 .credit{
     position:fixed;
     bottom:10px;
@@ -174,7 +137,6 @@ body{
 
 <body>
 
-<!-- VIDEO BACKGROUND (LINK + POSTER ANTI HITAM) -->
 <video
   id="bgVideo"
   class="bg-video"
@@ -188,15 +150,30 @@ body{
   <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
 </video>
 
-<div class="overlay" id="overlay"></div>
-<div class="hearts" id="hearts"></div>
+<div class="overlay"></div>
 
 <!-- AUDIO -->
 <audio id="mainSound" src="home.mp3" loop></audio>
-<audio id="loveSound" src="home2.mp3" loop></audio>
+
+<!-- INTRO -->
+<div class="container active" id="intro">
+    <div class="card">
+        <div class="title">Selamat Datang 👋</div>
+        <div class="intro-text">
+            Bu Ani beli kargo
+            Kenalin nama aku vigo<br>
+          
+            Terima kasih sudah berkunjung ke website ini.
+            Di dalamnya terdapat beberapa informasi dan kontak resmi Vigo.
+            <br><br>
+            Klik tombol di bawah untuk melanjutkan.
+        </div>
+        <div class="btn" onclick="openPage('home')">Masuk ke Web</div>
+    </div>
+</div>
 
 <!-- HOME -->
-<div class="container active" id="home">
+<div class="container" id="home">
     <div class="title">Vigo Website</div>
     <div class="card">
         <a class="item" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
@@ -210,48 +187,28 @@ body{
         </a>
 
         <div class="btn" onclick="openPage('payment')">Payment</div>
-        <div class="btn" onclick="openPage('love')">Rahasia</div>
     </div>
 </div>
 
 <!-- PAYMENT -->
 <div class="container" id="payment">
     <div class="card">
-        <div class="back" onclick="backHome()">← Back</div>
+        <div class="back" onclick="openPage('home')">← Back</div>
         <div class="item">DANA : 089509082049</div>
         <div class="item">OVO : 089509082049</div>
-        <div classs="item">GOPAY : 089509082049</div>
-    </div>
-</div>
-
-<!-- LOVE -->
-<div class="container" id="love">
-    <div class="card">
-        <div class="back" onclick="backHome()">← Back</div>
-        <div class="love-text">
-            Haiii 👋
-            <br><br>
-            Bu Ani Beli Kargo
-            Kenalin Nama Aku Vigo 
-            <br><br><br>
-            Buat Kamu Yang Ada Di Hati
-            Lopyuu Pokoknya  Dehh😘
-        </div>
+        <div class="item">GOPAY : 089509082049</div>
     </div>
 </div>
 
 <div class="credit">credit © Vigo</div>
 
 <script>
-const overlay = document.getElementById('overlay');
-const hearts = document.getElementById('hearts');
 const mainSound = document.getElementById('mainSound');
-const loveSound = document.getElementById('loveSound');
 const bgVideo = document.getElementById('bgVideo');
 
-let started=false, interval;
+let started=false;
 
-/* PAKSA VIDEO JALAN (ANTI AUTOPLAY BLOCK) */
+/* PAKSA VIDEO + AUDIO JALAN */
 document.addEventListener('click',()=>{
     if(bgVideo.paused){
         bgVideo.play().catch(()=>{});
@@ -265,31 +222,7 @@ document.addEventListener('click',()=>{
 function openPage(id){
     document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-
-    if(id==='love'){
-        overlay.classList.add('love');
-        hearts.style.display='block';
-        interval=setInterval(()=>{
-            const h=document.createElement('div');
-            h.className='heart';
-            h.innerHTML='❤';
-            h.style.left=Math.random()*100+'vw';
-            hearts.appendChild(h);
-            setTimeout(()=>h.remove(),6000);
-        },300);
-        mainSound.pause();
-        loveSound.play();
-    }else{
-        overlay.classList.remove('love');
-        hearts.style.display='none';
-        hearts.innerHTML='';
-        clearInterval(interval);
-        loveSound.pause();
-        if(started) mainSound.play();
-    }
 }
-
-function backHome(){ openPage('home'); }
 </script>
 
 </body>
