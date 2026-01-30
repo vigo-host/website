@@ -117,6 +117,121 @@ const video = document.getElementById("bgVideo");
 
 let started = false;
 let mode = "home";
+
+/* PLAYLIST */
+const homeList = [
+    "home1.mp3",
+    "home2.mp3",
+    "home3.mp3",
+    "home4.mp3",
+    "home5.mp3"
+];
+
+const paymentSound = "payment.mp3";
+
+/* RANDOM HOME SONG */
+function randomHome(){
+    return homeList[Math.floor(Math.random() * homeList.length)];
+}
+
+/* PLAY SOUND */
+function playSound(){
+    audio.pause();
+    audio.currentTime = 0;
+
+    if(mode === "payment"){
+        audio.src = paymentSound;
+        audio.loop = true;   // payment ulang terus
+    } else {
+        audio.src = randomHome();
+        audio.loop = false;  // home ganti saat habis
+    }
+
+    audio.load();
+    audio.play().catch(()=>{});
+}
+
+/* HOME SONG HABIS → RANDOM LAGI */
+audio.addEventListener("ended", ()=>{
+    if(mode === "home"){
+        playSound();
+    }
+});
+
+/* START WEB */
+function startWeb(){
+    if(started) return;
+
+    video.muted = false;
+    video.play().catch(()=>{});
+
+    mode = "home";
+    playSound();
+
+    started = true;
+    openPage("home");
+}
+
+/* PINDAH HALAMAN */
+function openPage(id){
+    document.querySelectorAll(".container")
+        .forEach(c => c.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+
+    if(!started) return;
+
+    mode = (id === "payment") ? "payment" : "home";
+    playSound();
+}
+</script>
+
+</body>
+</html>        <div class="intro-text">
+            Bu Ani beli kargo<br>
+            Kenalin nama aku Vigo<br><br>
+            Terima kasih sudah berkunjung ke website ini.
+            <br><br>
+            Klik tombol di bawah untuk melanjutkan.
+        </div>
+        <div class="btn" onclick="startWeb()">Masuk ke Web</div>
+    </div>
+</div>
+
+<!-- HOME -->
+<div class="container" id="home">
+    <div class="title">Vigo Website</div>
+    <div class="card">
+        <a class="item" href="https://www.tiktok.com/@.ovidio_guzman" target="_blank">
+            <i class="fa-brands fa-tiktok"></i> TikTok
+        </a>
+        <a class="item" href="https://wa.me/6289509082049" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> WA Utama
+        </a>
+        <a class="item" href="https://wa.me/6289616200535" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> WA Cadangan
+        </a>
+        <div class="btn" onclick="openPage('payment')">Payment</div>
+    </div>
+</div>
+
+<!-- PAYMENT -->
+<div class="container" id="payment">
+    <div class="card">
+        <div class="back" onclick="openPage('home')">← Back</div>
+        <div class="item">DANA : 089509082049</div>
+        <div class="item">OVO : 089509082049</div>
+        <div class="item">GOPAY : 089509082049</div>
+    </div>
+</div>
+
+<div class="credit">credit © Vigo</div>
+
+<script>
+const audio = document.getElementById("mainSound");
+const video = document.getElementById("bgVideo");
+
+let started = false;
+let mode = "home";
 let index = 0;
 
 /* PLAYLIST */
