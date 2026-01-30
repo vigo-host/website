@@ -73,30 +73,30 @@
 
 <div class="credit">© Vigo</div>
 
-<script>
+  <script>
 const audio = document.getElementById("mainSound");
 const video = document.getElementById("bgVideo");
 
-/* 🔇 VIDEO PERMANEN BISU */
+// 🔇 VIDEO BACKGROUND PERMANEN BISU
 video.muted = true;
 video.volume = 0;
 
 let started = false;
 let mode = null;
 
-/* PLAYLIST HOME */
+/* PLAYLIST HOME (LINK) */
 const homeSongs = [
-  "home1.mp3",
-  "home2.mp3",
-  "home3.mp3",
-  "home4.mp3",
-  "home5.mp3"
+  "https://example.com/music/home1.mp3",
+  "https://example.com/music/home2.mp3",
+  "https://example.com/music/home3.mp3",
+  "https://example.com/music/home4.mp3",
+  "https://example.com/music/home5.mp3"
 ];
 
 let playlist = [];
-let indexSong = 0;
+let index = 0;
 
-/* SHUFFLE AMAN (ANTI NYELIP) */
+/* SHUFFLE AMAN */
 function shuffle(arr){
   const a = [...arr];
   for(let i = a.length - 1; i > 0; i--){
@@ -106,7 +106,7 @@ function shuffle(arr){
   return a;
 }
 
-/* STOP AUDIO TOTAL */
+/* STOP TOTAL */
 function stopAudio(){
   audio.pause();
   audio.currentTime = 0;
@@ -116,18 +116,18 @@ function stopAudio(){
 
 /* LOAD HOME SONG */
 function loadHome(){
-  if(indexSong >= playlist.length){
+  if(index >= playlist.length){
     playlist = shuffle(homeSongs);
-    indexSong = 0;
+    index = 0;
   }
-  audio.src = playlist[indexSong];
+  audio.src = playlist[index];
   audio.loop = false;
   audio.play().catch(()=>{});
 }
 
-/* LOAD PAYMENT SONG */
+/* LOAD PAYMENT SONG (LINK) */
 function loadPayment(){
-  audio.src = "payment.mp3";
+  audio.src = "https://example.com/music/payment.mp3";
   audio.loop = true;
   audio.play().catch(()=>{});
 }
@@ -135,21 +135,17 @@ function loadPayment(){
 /* SATU-SATUNYA ONENDED */
 audio.onended = () => {
   if(mode === "home"){
-    indexSong++;
+    index++;
     loadHome();
   }
 };
 
-/* START WEBSITE */
+/* START */
 function startWeb(){
   if(started) return;
   started = true;
 
-  // 🔇 pastikan video tetap bisu
-  video.muted = true;
-  video.volume = 0;
   video.play().catch(()=>{});
-
   openPage("home");
 }
 
@@ -167,7 +163,7 @@ function openPage(id){
     mode = "home";
     if(playlist.length === 0){
       playlist = shuffle(homeSongs);
-      indexSong = 0;
+      index = 0;
     }
     loadHome();
   }
@@ -177,7 +173,6 @@ function openPage(id){
     loadPayment();
   }
 }
-</script>
-
+      </script>
 </body>
 </html>
