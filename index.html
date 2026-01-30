@@ -89,11 +89,11 @@ const homeSongs = [
   "home5.mp3"
 ];
 
-let shuffledSongs = [];
-let songIndex = 0;
+let playlist = [];
+let index = 0;
 
-/* SHUFFLE AMAN (FISHER–YATES) */
-function shuffleArray(arr){
+/* SHUFFLE AMAN */
+function shuffle(arr){
   const a = [...arr];
   for(let i = a.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
@@ -102,46 +102,41 @@ function shuffleArray(arr){
   return a;
 }
 
-/* STOP TOTAL AUDIO */
+/* STOP TOTAL */
 function stopAudio(){
   audio.pause();
+  audio.currentTime = 0;
   audio.removeAttribute("src");
   audio.load();
-  audio.onended = null;
 }
 
-/* PLAY HOME (ACAK + LANJUT) */
-function playHome(){
-  stopAudio();
-  mode = "home";
-
-  if (shuffledSongs.length === 0 || songIndex >= shuffledSongs.length) {
-    shuffledSongs = shuffleArray(homeSongs);
-    songIndex = 0;
+/* LOAD HOME SONG */
+function loadHome(){
+  if(index >= playlist.length){
+    playlist = shuffle(homeSongs);
+    index = 0;
   }
-
-  audio.src = shuffledSongs[songIndex];
+  audio.src = playlist[index];
   audio.loop = false;
   audio.play().catch(()=>{});
-
-  audio.onended = () => {
-    if(mode !== "home") return;
-    songIndex++;
-    playHome();
-  };
 }
 
-/* PLAY PAYMENT (1 LAGU LOOP) */
-function playPayment(){
-  stopAudio();
-  mode = "payment";
-
+/* LOAD PAYMENT SONG */
+function loadPayment(){
   audio.src = "payment.mp3";
   audio.loop = true;
   audio.play().catch(()=>{});
 }
 
-/* START WEBSITE */
+/* SATU-SATUNYA ONENDED */
+audio.onended = () => {
+  if(mode === "home"){
+    index++;
+    loadHome();
+  }
+};
+
+/* START */
 function startWeb(){
   if(started) return;
   started = true;
@@ -152,17 +147,29 @@ function startWeb(){
   openPage("home");
 }
 
-/* PINDAH PAGE */
+/* PAGE SWITCH */
 function openPage(id){
   document.querySelectorAll(".container")
     .forEach(c => c.classList.remove("active"));
-
   document.getElementById(id).classList.add("active");
 
   if(!started) return;
 
-  if(id === "home" && mode !== "home") playHome();
-  if(id === "payment" && mode !== "payment") playPayment();
+  stopAudio();
+
+  if(id === "home"){
+    mode = "home";
+    if(playlist.length === 0){
+      playlist = shuffle(homeSongs);
+      index = 0;
+    }
+    loadHome();
+  }
+
+  if(id === "payment"){
+    mode = "payment";
+    loadPayment();
+  }
 }
 </script>
 
