@@ -184,13 +184,15 @@ function playHome(){
   stopAudio();
   mode = "home";
 
+  // Inisialisasi shuffled hanya jika kosong atau indexSong mencapai akhir array
   if(shuffled.length === 0 || indexSong >= shuffled.length){
     shuffled = shuffle([...homeSongs]);
-    indexSong = 0;
+    indexSong = 0; // Reset indexSong setelah shuffle
   }
 
   audio.src = shuffled[indexSong];
   indexSong++;
+
   audio.loop = false;
   audio.play().catch(()=>{});
 
@@ -198,6 +200,7 @@ function playHome(){
     if(mode === "home") playHome();
   };
 }
+
 
 /* PLAY PAYMENT */
 function playPayment(){
