@@ -68,7 +68,17 @@ body{background:black;color:#fff;}
   font-weight:600;
   cursor:pointer;
 }
-.back{text-align:left;margin-bottom:14px;cursor:pointer;}
+.back{
+  display:inline-block;
+  margin-bottom:14px;
+  padding:8px 14px;
+  background:#fff;
+  color:#000;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
 .credit{
   position:fixed;
   bottom:10px;
@@ -93,11 +103,13 @@ body{background:black;color:#fff;}
 <div class="container active" id="intro">
   <div class="card">
     <div class="title">Selamat Datang 👋</div>
+
+    <p style="font-size:14px;opacity:.9;line-height:1.6;">
       Bu Ani beli kargo<br>
-            Kenalin nama aku Vigo<br><br>
-            Terima kasih sudah berkunjung ke website ini.
-            <br><br>
-    <p>Klik tombol di bawah untuk masuk</p>
+      Kenalin nama aku Vigo<br><br>
+      Terima kasih sudah berkunjung ke website ini.
+    </p>
+
     <div class="btn" onclick="startWeb()">Masuk</div>
   </div>
 </div>
@@ -106,12 +118,19 @@ body{background:black;color:#fff;}
 <div class="container" id="home">
   <div class="title">Vigo Website</div>
   <div class="card">
+
     <a class="item" href="https://www.tiktok.com/@usernamekamu" target="_blank">
       <i class="fa-brands fa-tiktok"></i> TikTok
     </a>
+
     <a class="item" href="https://wa.me/6289509082049" target="_blank">
-      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp 1
     </a>
+
+    <a class="item" href="https://wa.me/6281234567890" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp 2
+    </a>
+
     <div class="btn" onclick="openPage('payment')">Payment</div>
   </div>
 </div>
@@ -134,7 +153,6 @@ const video = document.getElementById("bgVideo");
 
 let started = false;
 let mode = "";
-let lastSong = null;
 
 /* PLAYLIST HOME */
 const homeSongs = [
@@ -145,20 +163,15 @@ const homeSongs = [
   "home5.mp3"
 ];
 
-/* SOUND PAYMENT */
-const paymentSong = "payment.mp3";
+/* SHUFFLE SYSTEM */
+let shuffled = [];
+let indexSong = 0;
 
-/* RANDOM HOME */
-function randomHome(){
-  let song;
-  do{
-    song = homeSongs[Math.floor(Math.random()*homeSongs.length)];
-  }while(song === lastSong && homeSongs.length > 1);
-  lastSong = song;
-  return song;
+function shuffle(arr){
+  return arr.sort(() => Math.random() - 0.5);
 }
 
-/* STOP TOTAL */
+/* STOP AUDIO */
 function stopAudio(){
   audio.pause();
   audio.currentTime = 0;
@@ -170,9 +183,17 @@ function stopAudio(){
 function playHome(){
   stopAudio();
   mode = "home";
-  audio.src = randomHome();
+
+  if(shuffled.length === 0 || indexSong >= shuffled.length){
+    shuffled = shuffle([...homeSongs]);
+    indexSong = 0;
+  }
+
+  audio.src = shuffled[indexSong];
+  indexSong++;
   audio.loop = false;
   audio.play().catch(()=>{});
+
   audio.onended = ()=>{
     if(mode === "home") playHome();
   };
@@ -182,12 +203,12 @@ function playHome(){
 function playPayment(){
   stopAudio();
   mode = "payment";
-  audio.src = paymentSong;
+  audio.src = "payment.mp3";
   audio.loop = true;
   audio.play().catch(()=>{});
 }
 
-/* START WEBSITE */
+/* START */
 function startWeb(){
   if(started) return;
   started = true;
@@ -213,4 +234,4 @@ function openPage(id){
 </script>
 
 </body>
-</html>
+      </html>
