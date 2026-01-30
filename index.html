@@ -15,19 +15,15 @@
     box-sizing:border-box;
     font-family:'Poppins', sans-serif;
 }
-
 html,body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
-
 body{
     background:black;
     color:#fff;
 }
-
-/* VIDEO */
 .bg-video{
     position:fixed;
     inset:0;
@@ -36,16 +32,12 @@ body{
     object-fit:cover;
     z-index:-1;
 }
-
-/* OVERLAY */
 .overlay{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,.55);
     z-index:0;
 }
-
-/* CONTAINER */
 .container{
     position:absolute;
     top:50%;
@@ -58,24 +50,18 @@ body{
     display:none;
     z-index:2;
 }
-
 .container#intro{max-width:420px;}
 .container.active{display:block;}
-
 .title{
     font-size:30px;
     font-weight:700;
     margin-bottom:16px;
 }
-
-/* CARD (NO BLUR – ANTI CAHAYA) */
 .card{
     padding:26px 18px;
     background:rgba(0,0,0,.6);
     border-radius:22px;
 }
-
-/* ITEM */
 .item{
     width:100%;
     margin:10px 0;
@@ -91,8 +77,6 @@ body{
     font-weight:600;
     text-decoration:none;
 }
-
-/* BUTTON */
 .btn{
     width:100%;
     margin-top:14px;
@@ -103,21 +87,15 @@ body{
     font-weight:600;
     cursor:pointer;
 }
-
 .back{
     text-align:left;
     margin-bottom:14px;
     cursor:pointer;
 }
-
-/* INTRO */
 .intro-text{
     font-size:16px;
     line-height:1.8;
-    opacity:.95;
 }
-
-/* CREDIT */
 .credit{
     position:fixed;
     bottom:10px;
@@ -138,7 +116,6 @@ body{
 
 <div class="overlay"></div>
 
-<!-- AUDIO -->
 <audio id="mainSound" loop></audio>
 
 <!-- INTRO -->
@@ -152,7 +129,8 @@ body{
             <br><br>
             Klik tombol di bawah untuk melanjutkan.
         </div>
-        <div class="btn" onclick="openPage('home')">Masuk ke Web</div>
+        <!-- PENTING -->
+        <div class="btn" onclick="startWeb()">Masuk ke Web</div>
     </div>
 </div>
 
@@ -188,11 +166,10 @@ body{
 
 <script>
 const mainSound = document.getElementById("mainSound");
-const bgVideo   = document.getElementById("bgVideo");
+const bgVideo = document.getElementById("bgVideo");
 
-let unlocked = false;
+let started = false;
 
-/* LAGU */
 const homeSongs = [
     "home1.mp3",
     "home2.mp3",
@@ -202,32 +179,36 @@ const homeSongs = [
 ];
 const paymentSong = "payment.mp3";
 
-/* RANDOM SEKALI */
 const homeSong = homeSongs[Math.floor(Math.random()*homeSongs.length)];
 mainSound.src = homeSong;
 
-/* IZIN AUDIO ANDROID */
-document.addEventListener("click", ()=>{
-    if(unlocked) return;
+function startWeb(){
+    if(started) return;
+
+    bgVideo.muted = false;
     bgVideo.play().catch(()=>{});
+
+    mainSound.currentTime = 0;
     mainSound.play().catch(()=>{});
-    unlocked = true;
-},{once:true});
+
+    started = true;
+    openPage("home");
+}
 
 function openPage(id){
     document.querySelectorAll(".container")
         .forEach(c=>c.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 
-    if(!unlocked) return;
+    if(!started) return;
 
-    if(id==="payment"){
-        if(mainSound.src.indexOf(paymentSong)===-1){
+    if(id === "payment"){
+        if(!mainSound.src.includes(paymentSong)){
             mainSound.src = paymentSong;
             mainSound.play().catch(()=>{});
         }
     }else{
-        if(mainSound.src.indexOf(homeSong)===-1){
+        if(!mainSound.src.includes(homeSong)){
             mainSound.src = homeSong;
             mainSound.play().catch(()=>{});
         }
