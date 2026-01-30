@@ -45,7 +45,7 @@ body{
     z-index:0;
 }
 
-/* CONTAINER (FIX BLANK) */
+/* CONTAINER */
 .container{
     position:absolute;
     top:50%;
@@ -59,7 +59,6 @@ body{
     z-index:2;
 }
 
-/* KHUSUS INTRO BIAR LEBAR */
 .container#intro{
     max-width:420px;
 }
@@ -90,7 +89,6 @@ body{
     background:#000;
     border-radius:14px;
     color:#fff;
-    text-decoration:none;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -139,23 +137,14 @@ body{
 
 <body>
 
-<video
-  id="bgVideo"
-  class="bg-video"
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="auto"
-  poster="https://images.unsplash.com/photo-1503264116251-35a269479413"
->
-  <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
+    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
 <!-- AUDIO -->
-<audio id="mainSound" src="home.mp3" loop></audio>
+<audio id="mainSound" loop></audio>
 
 <!-- INTRO -->
 <div class="container active" id="intro">
@@ -165,7 +154,6 @@ body{
             Bu Ani beli kargo<br>
             Kenalin nama aku Vigo<br><br>
             Terima kasih sudah berkunjung ke website ini.
-            Di dalamnya terdapat beberapa informasi dan kontak resmi Vigo.
             <br><br>
             Klik tombol di bawah untuk melanjutkan.
         </div>
@@ -207,24 +195,58 @@ body{
 const mainSound = document.getElementById('mainSound');
 const bgVideo = document.getElementById('bgVideo');
 
-let started=false;
+let started = false;
 
-/* PAKSA VIDEO + AUDIO JALAN */
-document.addEventListener('click',()=>{
-    if(bgVideo.paused){
-        bgVideo.play().catch(()=>{});
-    }
-    if(!started){
+/* LAGU RANDOM (HOME) */
+const randomSongs = [
+    "home1.mp3",
+    "home2.mp3",
+    "home3.mp3",
+    "home4.mp3",
+    "home5.mp3"
+];
+
+/* LAGU KHUSUS PAYMENT */
+const paymentSong = "payment.mp3";
+
+/* PILIH RANDOM SEKALI */
+let currentRandomSong =
+    randomSongs[Math.floor(Math.random() * randomSongs.length)];
+
+mainSound.src = currentRandomSong;
+
+/* AUTOPLAY SETELAH KLIK */
+document.addEventListener('click', () => {
+
+    if (bgVideo.paused) bgVideo.play().catch(()=>{});
+
+    if (!started) {
         mainSound.play().catch(()=>{});
-        started=true;
+        started = true;
     }
-},{once:true});
+
+}, { once:true });
 
 function openPage(id){
-    document.querySelectorAll('.container').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('.container')
+        .forEach(c => c.classList.remove('active'));
+
     document.getElementById(id).classList.add('active');
+
+    /* LOGIC GANTI LAGU */
+    if (id === "payment") {
+        if (mainSound.src.indexOf(paymentSong) === -1) {
+            mainSound.src = paymentSong;
+            mainSound.play().catch(()=>{});
+        }
+    } else {
+        if (mainSound.src.indexOf(currentRandomSong) === -1) {
+            mainSound.src = currentRandomSong;
+            mainSound.play().catch(()=>{});
+        }
+    }
 }
 </script>
 
 </body>
-</html>
+            </html>
