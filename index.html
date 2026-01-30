@@ -1,13 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Website Vigo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{background:black;color:#fff;}
+
+.bg-video{
+    position:fixed;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;z-index:-1;
+}
+.overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.55);z-index:0;
+}
+.container{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:100%;
+    max-width:340px;
+    padding:0 14px;
+    text-align:center;
+    display:none;
+    z-index:2;
+}
+.container.active{display:block;}
+
+.title{font-size:30px;font-weight:700;margin-bottom:16px;}
+.card{
+    padding:26px 18px;
+    background:rgba(0,0,0,.6);
+    border-radius:22px;
+}
+.item{
+    width:100%;
+    margin:10px 0;
+    padding:14px;
+    background:#000;
+    border-radius:14px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    text-decoration:none;
+}
+.btn{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    border-radius:14px;
+    background:#fff;
+    color:#000;
+    font-weight:600;
+    cursor:pointer;
+}
+.back{text-align:left;margin-bottom:14px;cursor:pointer;}
+.credit{
+    position:fixed;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:12px;
+    opacity:.8;
+}
+</style>
+</head>
+
+<body>
+
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
+    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<audio id="mainSound" preload="auto"></audio>
+
+<!-- INTRO -->
+<div class="container active" id="intro">
+    <div class="card">
+        <div class="title">Selamat Datang 👋</div>
+        <p>Klik tombol di bawah untuk masuk</p>
+        <div class="btn" onclick="startWeb()">Masuk</div>
+    </div>
+</div>
+
+<!-- HOME -->
+<div class="container" id="home">
+    <div class="title">Vigo Website</div>
+    <div class="card">
+        <div class="item">TikTok</div>
+        <div class="item">WhatsApp</div>
+        <div class="btn" onclick="openPage('payment')">Payment</div>
+    </div>
+</div>
+
+<!-- PAYMENT -->
+<div class="container" id="payment">
+    <div class="card">
+        <div class="back" onclick="openPage('home')">← Back</div>
+        <div class="item">DANA : 089509082049</div>
+        <div class="item">OVO : 089509082049</div>
+        <div class="item">GOPAY : 089509082049</div>
+    </div>
+</div>
+
+<div class="credit">© Vigo</div>
+
 <script>
 const audio = document.getElementById("mainSound");
 const video = document.getElementById("bgVideo");
 
 let started = false;
 let mode = "home";
-let lastHome = "";
+let lastSong = "";
 
-/* PLAYLIST */
-const homeList = [
+/* PLAYLIST HOME */
+const homeSongs = [
   "home1.mp3",
   "home2.mp3",
   "home3.mp3",
@@ -15,44 +132,45 @@ const homeList = [
   "home5.mp3"
 ];
 
-const paymentSound = "payment.mp3";
+const paymentSong = "payment.mp3";
 
-/* AMBIL RANDOM (ANTI SAMA) */
-function getRandomHome(){
+/* RANDOM AMAN */
+function randomHome(){
   let song;
   do{
-    song = homeList[Math.floor(Math.random()*homeList.length)];
-  }while(song === lastHome && homeList.length > 1);
-  lastHome = song;
+    song = homeSongs[Math.floor(Math.random()*homeSongs.length)];
+  }while(song === lastSong && homeSongs.length > 1);
+  lastSong = song;
   return song;
 }
 
-/* SET AUDIO (WAJIB LOAD) */
-function setAudio(src, loop){
+/* SET & PLAY (PALING AMAN) */
+function playAudio(src, loop){
+  audio.pause();
+  audio.currentTime = 0;
   audio.src = src;
   audio.loop = loop;
-  audio.load();              // ⬅️ INI KUNCI
+  audio.load();
   audio.play().catch(()=>{});
 }
 
-/* HOME NEXT */
+/* HOME SELESAI → GANTI */
 audio.addEventListener("ended", ()=>{
   if(mode === "home"){
-    setAudio(getRandomHome(), false);
+    playAudio(randomHome(), false);
   }
 });
 
 /* START */
 function startWeb(){
   if(started) return;
-
   started = true;
 
   video.muted = false;
   video.play().catch(()=>{});
 
   mode = "home";
-  setAudio(getRandomHome(), false);
+  playAudio(randomHome(), false);
   openPage("home");
 }
 
@@ -66,12 +184,15 @@ function openPage(id){
 
   if(id === "payment" && mode !== "payment"){
     mode = "payment";
-    setAudio(paymentSound, true);
+    playAudio(paymentSong, true);
   }
 
   if(id === "home" && mode !== "home"){
     mode = "home";
-    setAudio(getRandomHome(), false);
+    playAudio(randomHome(), false);
   }
 }
 </script>
+
+</body>
+</html>
