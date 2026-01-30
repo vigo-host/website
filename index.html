@@ -76,9 +76,11 @@
 <script>
 const audio = document.getElementById("mainSound");
 const video = document.getElementById("bgVideo");
+
 let started = false;
-let mode = "";
-/* PLAYLIST HOME */
+let mode = null;
+
+/* PLAYLIST */
 const homeSongs = [
   "home1.mp3",
   "home2.mp3",
@@ -86,61 +88,75 @@ const homeSongs = [
   "home4.mp3",
   "home5.mp3"
 ];
-/* SHUFFLE SYSTEM */
-let shuffled = [];
-let indexSong = 0;
-function shuffle(arr){
-  return arr.sort(() => Math.random() - 0.5);
+
+let shuffledSongs = [];
+let songIndex = 0;
+
+/* SHUFFLE AMAN (FISHER–YATES) */
+function shuffleArray(arr){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
-/* STOP AUDIO */
+
+/* STOP TOTAL AUDIO */
 function stopAudio(){
   audio.pause();
-  audio.currentTime = 0;
-  audio.src = "";
+  audio.removeAttribute("src");
+  audio.load();
   audio.onended = null;
 }
-/* PLAY HOME */
+
+/* PLAY HOME (ACAK + LANJUT) */
 function playHome(){
   stopAudio();
   mode = "home";
 
-  if (shuffled.length === 0) {
-    shuffled = shuffle([...homeSongs]);
-    indexSong = 0;
+  if (shuffledSongs.length === 0 || songIndex >= shuffledSongs.length) {
+    shuffledSongs = shuffleArray(homeSongs);
+    songIndex = 0;
   }
 
-  audio.src = shuffled[indexSong];
+  audio.src = shuffledSongs[songIndex];
   audio.loop = false;
   audio.play().catch(()=>{});
-  indexSong = (indexSong + 1) % shuffled.length; // Memastikan indexSong selalu dalam batas array
 
   audio.onended = () => {
-    if (mode === "home") playHome();
+    if(mode !== "home") return;
+    songIndex++;
+    playHome();
   };
 }
-/* PLAY PAYMENT */
+
+/* PLAY PAYMENT (1 LAGU LOOP) */
 function playPayment(){
   stopAudio();
   mode = "payment";
+
   audio.src = "payment.mp3";
   audio.loop = true;
   audio.play().catch(()=>{});
-  audio.onended = () => {
-        if (mode === "payment") playPayment();
-    };
 }
-/* START */
+
+/* START WEBSITE */
 function startWeb(){
   if(started) return;
   started = true;
+
   video.muted = false;
   video.play().catch(()=>{});
-  playHome();
+
   openPage("home");
 }
-/* PAGE SWITCH */
+
+/* PINDAH PAGE */
 function openPage(id){
-  document.querySelectorAll(".container").forEach(c=>c.classList.remove("active"));
+  document.querySelectorAll(".container")
+    .forEach(c => c.classList.remove("active"));
+
   document.getElementById(id).classList.add("active");
 
   if(!started) return;
