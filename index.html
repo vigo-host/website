@@ -14,62 +14,68 @@ html,body{width:100%;height:100%;overflow:hidden;}
 body{background:black;color:#fff;}
 
 .bg-video{
-    position:fixed;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;z-index:-1;
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;z-index:-1;
 }
 .overlay{
-    position:fixed;inset:0;
-    background:rgba(0,0,0,.55);z-index:0;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
 }
 .container{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:100%;
-    max-width:340px;
-    padding:0 14px;
-    text-align:center;
-    display:none;
-    z-index:2;
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:100%;
+  max-width:340px;
+  padding:0 14px;
+  text-align:center;
+  display:none;
+  z-index:2;
 }
 .container.active{display:block;}
 
 .title{font-size:30px;font-weight:700;margin-bottom:16px;}
 .card{
-    padding:26px 18px;
-    background:rgba(0,0,0,.6);
-    border-radius:22px;
+  padding:26px 18px;
+  background:rgba(0,0,0,.6);
+  border-radius:22px;
 }
 .item{
-    width:100%;
-    margin:10px 0;
-    padding:14px;
-    background:#000;
-    border-radius:14px;
-    color:#fff;
-    font-size:15px;
-    font-weight:600;
-    text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  margin:10px 0;
+  padding:14px;
+  background:#000;
+  border-radius:14px;
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  text-decoration:none;
 }
+.item i{font-size:18px;}
+
 .btn{
-    width:100%;
-    margin-top:14px;
-    padding:14px;
-    border-radius:14px;
-    background:#fff;
-    color:#000;
-    font-weight:600;
-    cursor:pointer;
+  width:100%;
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  background:#fff;
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
 }
 .back{text-align:left;margin-bottom:14px;cursor:pointer;}
 .credit{
-    position:fixed;
-    bottom:10px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:12px;
-    opacity:.8;
+  position:fixed;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:12px;
+  opacity:.8;
 }
 </style>
 </head>
@@ -77,157 +83,47 @@ body{background:black;color:#fff;}
 <body>
 
 <video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
-    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
+  <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
 </video>
-
 <div class="overlay"></div>
 
 <audio id="mainSound" preload="auto"></audio>
 
 <!-- INTRO -->
 <div class="container active" id="intro">
-    <div class="card">
-        <div class="title">Selamat Datang 👋</div>
-        <p>Klik tombol di bawah untuk masuk</p>
-        <div class="btn" onclick="startWeb()">Masuk</div>
-    </div>
+  <div class="card">
+    <div class="title">Selamat Datang 👋</div>
+      Bu Ani beli kargo<br>
+            Kenalin nama aku Vigo<br><br>
+            Terima kasih sudah berkunjung ke website ini.
+            <br><br>
+    <p>Klik tombol di bawah untuk masuk</p>
+    <div class="btn" onclick="startWeb()">Masuk</div>
+  </div>
 </div>
 
 <!-- HOME -->
 <div class="container" id="home">
-    <div class="title">Vigo Website</div>
-    <div class="card">
-        <div class="item">TikTok</div>
-        <div class="item">WhatsApp</div>
-        <div class="btn" onclick="openPage('payment')">Payment</div>
-    </div>
+  <div class="title">Vigo Website</div>
+  <div class="card">
+    <a class="item" href="https://www.tiktok.com/@usernamekamu" target="_blank">
+      <i class="fa-brands fa-tiktok"></i> TikTok
+    </a>
+    <a class="item" href="https://wa.me/6289509082049" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </a>
+    <div class="btn" onclick="openPage('payment')">Payment</div>
+  </div>
 </div>
 
 <!-- PAYMENT -->
 <div class="container" id="payment">
-    <div class="card">
-        <div class="back" onclick="openPage('home')">← Back</div>
-        <div class="item">DANA : 089509082049</div>
-        <div class="item">OVO : 089509082049</div>
-        <div class="item">GOPAY : 089509082049</div>
-    </div>
-</div>
-
-<div class="credit">© Vigo</div>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Website Vigo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-html,body{width:100%;height:100%;overflow:hidden;}
-body{background:black;color:#fff;}
-
-.bg-video{
-    position:fixed;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;z-index:-1;
-}
-.overlay{
-    position:fixed;inset:0;
-    background:rgba(0,0,0,.55);z-index:0;
-}
-.container{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:100%;
-    max-width:340px;
-    padding:0 14px;
-    text-align:center;
-    display:none;
-    z-index:2;
-}
-.container.active{display:block;}
-
-.title{font-size:30px;font-weight:700;margin-bottom:16px;}
-.card{
-    padding:26px 18px;
-    background:rgba(0,0,0,.6);
-    border-radius:22px;
-}
-.item{
-    width:100%;
-    margin:10px 0;
-    padding:14px;
-    background:#000;
-    border-radius:14px;
-    color:#fff;
-    font-size:15px;
-    font-weight:600;
-    text-decoration:none;
-}
-.btn{
-    width:100%;
-    margin-top:14px;
-    padding:14px;
-    border-radius:14px;
-    background:#fff;
-    color:#000;
-    font-weight:600;
-    cursor:pointer;
-}
-.back{text-align:left;margin-bottom:14px;cursor:pointer;}
-.credit{
-    position:fixed;
-    bottom:10px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:12px;
-    opacity:.8;
-}
-</style>
-</head>
-
-<body>
-
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
-    <source src="https://b.top4top.io/m_3635xr57z0.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
-
-<audio id="mainSound" preload="auto"></audio>
-
-<!-- INTRO -->
-<div class="container active" id="intro">
-    <div class="card">
-        <div class="title">Selamat Datang 👋</div>
-        <p>Klik tombol di bawah untuk masuk</p>
-        <div class="btn" onclick="startWeb()">Masuk</div>
-    </div>
-</div>
-
-<!-- HOME -->
-<div class="container" id="home">
-    <div class="title">Vigo Website</div>
-    <div class="card">
-        <div class="item">TikTok</div>
-        <div class="item">WhatsApp</div>
-        <div class="btn" onclick="openPage('payment')">Payment</div>
-    </div>
-</div>
-
-<!-- PAYMENT -->
-<div class="container" id="payment">
-    <div class="card">
-        <div class="back" onclick="openPage('home')">← Back</div>
-        <div class="item">DANA : 089509082049</div>
-        <div class="item">OVO : 089509082049</div>
-        <div class="item">GOPAY : 089509082049</div>
-    </div>
+  <div class="card">
+    <div class="back" onclick="openPage('home')">← Back</div>
+    <div class="item">DANA : 089509082049</div>
+    <div class="item">OVO : 089509082049</div>
+    <div class="item">GOPAY : 089509082049</div>
+  </div>
 </div>
 
 <div class="credit">© Vigo</div>
@@ -237,8 +133,8 @@ const audio = document.getElementById("mainSound");
 const video = document.getElementById("bgVideo");
 
 let started = false;
-let mode = "home";
-let lastSong = "";
+let mode = "";
+let lastSong = null;
 
 /* PLAYLIST HOME */
 const homeSongs = [
@@ -249,9 +145,10 @@ const homeSongs = [
   "home5.mp3"
 ];
 
+/* SOUND PAYMENT */
 const paymentSong = "payment.mp3";
 
-/* RANDOM AMAN */
+/* RANDOM HOME */
 function randomHome(){
   let song;
   do{
@@ -261,24 +158,36 @@ function randomHome(){
   return song;
 }
 
-/* SET & PLAY (PALING AMAN) */
-function playAudio(src, loop){
+/* STOP TOTAL */
+function stopAudio(){
   audio.pause();
   audio.currentTime = 0;
-  audio.src = src;
-  audio.loop = loop;
-  audio.load();
+  audio.src = "";
+  audio.onended = null;
+}
+
+/* PLAY HOME */
+function playHome(){
+  stopAudio();
+  mode = "home";
+  audio.src = randomHome();
+  audio.loop = false;
+  audio.play().catch(()=>{});
+  audio.onended = ()=>{
+    if(mode === "home") playHome();
+  };
+}
+
+/* PLAY PAYMENT */
+function playPayment(){
+  stopAudio();
+  mode = "payment";
+  audio.src = paymentSong;
+  audio.loop = true;
   audio.play().catch(()=>{});
 }
 
-/* HOME SELESAI → GANTI */
-audio.addEventListener("ended", ()=>{
-  if(mode === "home"){
-    playAudio(randomHome(), false);
-  }
-});
-
-/* START */
+/* START WEBSITE */
 function startWeb(){
   if(started) return;
   started = true;
@@ -286,12 +195,11 @@ function startWeb(){
   video.muted = false;
   video.play().catch(()=>{});
 
-  mode = "home";
-  playAudio(randomHome(), false);
+  playHome();
   openPage("home");
 }
 
-/* PINDAH PAGE */
+/* PAGE SWITCH */
 function openPage(id){
   document.querySelectorAll(".container")
     .forEach(c=>c.classList.remove("active"));
@@ -299,20 +207,10 @@ function openPage(id){
 
   if(!started) return;
 
-  if(id === "payment" && mode !== "payment"){
-    mode = "payment";
-    playAudio(paymentSong, true);
-  }
-
-  if(id === "home" && mode !== "home"){
-    mode = "home";
-    playAudio(randomHome(), false);
-  }
+  if(id === "home" && mode !== "home") playHome();
+  if(id === "payment" && mode !== "payment") playPayment();
 }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
