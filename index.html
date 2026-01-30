@@ -77,10 +77,14 @@
 const audio = document.getElementById("mainSound");
 const video = document.getElementById("bgVideo");
 
+/* 🔇 VIDEO PERMANEN BISU */
+video.muted = true;
+video.volume = 0;
+
 let started = false;
 let mode = null;
 
-/* PLAYLIST */
+/* PLAYLIST HOME */
 const homeSongs = [
   "home1.mp3",
   "home2.mp3",
@@ -90,9 +94,9 @@ const homeSongs = [
 ];
 
 let playlist = [];
-let index = 0;
+let indexSong = 0;
 
-/* SHUFFLE AMAN */
+/* SHUFFLE AMAN (ANTI NYELIP) */
 function shuffle(arr){
   const a = [...arr];
   for(let i = a.length - 1; i > 0; i--){
@@ -102,7 +106,7 @@ function shuffle(arr){
   return a;
 }
 
-/* STOP TOTAL */
+/* STOP AUDIO TOTAL */
 function stopAudio(){
   audio.pause();
   audio.currentTime = 0;
@@ -112,11 +116,11 @@ function stopAudio(){
 
 /* LOAD HOME SONG */
 function loadHome(){
-  if(index >= playlist.length){
+  if(indexSong >= playlist.length){
     playlist = shuffle(homeSongs);
-    index = 0;
+    indexSong = 0;
   }
-  audio.src = playlist[index];
+  audio.src = playlist[indexSong];
   audio.loop = false;
   audio.play().catch(()=>{});
 }
@@ -131,17 +135,19 @@ function loadPayment(){
 /* SATU-SATUNYA ONENDED */
 audio.onended = () => {
   if(mode === "home"){
-    index++;
+    indexSong++;
     loadHome();
   }
 };
 
-/* START */
+/* START WEBSITE */
 function startWeb(){
   if(started) return;
   started = true;
 
-  video.muted = false;
+  // 🔇 pastikan video tetap bisu
+  video.muted = true;
+  video.volume = 0;
   video.play().catch(()=>{});
 
   openPage("home");
@@ -161,7 +167,7 @@ function openPage(id){
     mode = "home";
     if(playlist.length === 0){
       playlist = shuffle(homeSongs);
-      index = 0;
+      indexSong = 0;
     }
     loadHome();
   }
